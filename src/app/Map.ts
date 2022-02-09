@@ -1,4 +1,4 @@
-import { Object3D, Scene } from "three";
+import { AmbientLight, DirectionalLight, Object3D, Scene } from "three";
 import { Block } from "./Block";
 import { IRenderable } from "./IRenderable";
 
@@ -16,6 +16,12 @@ export class Map extends Object3D implements IRenderable {
         this.add(this.blocks[x][y]);
       }
     }
+
+    const directional = new DirectionalLight(0xffffff, 1);
+    const ambient = new AmbientLight(0xffffff, 0.5);
+    directional.position.set(-1, 4, -1);
+    this.add(directional);
+    this.add(ambient);
   }
 
   public getBlock(x: number, y: number) {

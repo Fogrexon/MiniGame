@@ -1,4 +1,4 @@
-import { Mesh, BoxGeometry, MeshBasicMaterial, Color } from "three";
+import { Mesh, BoxGeometry, MeshBasicMaterial, Color, MeshStandardMaterial } from "three";
 import { IRenderable } from "./IRenderable";
 
 type Road = 'none' | 'vertical' | 'horizontal' | 'both' | 'building';
@@ -16,7 +16,7 @@ export class Block extends Mesh implements IRenderable {
 
   constructor(x: number ,y: number, getter: (x: number, y: number) => Block) {
     super(new BoxGeometry(1, 1, 1),
-      new MeshBasicMaterial({ color: Math.floor(Math.random() * 256 * 256 * 256) })
+      new MeshStandardMaterial({ color: Math.floor(Math.random() * 256 * 256 * 256) })
     );
     this.x = x;
     this.y = y;
@@ -108,16 +108,16 @@ export class Block extends Mesh implements IRenderable {
       }
       case 'building': {
         this.scale.x = 1;
-        this.scale.y = 2;
+        this.scale.y = Math.sin(this.x) * Math.cos(this.y) * 3 + 1;
         this.scale.z = 1;
         value = 0.5;
         break;
       }
       default: {
-        this.scale.x = 0.5;
+        this.scale.x = 1;
         this.scale.y = 0.5;
-        this.scale.z = 0.5;
-        value = 0.0;
+        this.scale.z = 1;
+        value = 0.1;
         break;
       }
     }
